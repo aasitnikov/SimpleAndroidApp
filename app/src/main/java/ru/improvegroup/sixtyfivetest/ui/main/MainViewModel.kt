@@ -1,12 +1,12 @@
 package ru.improvegroup.sixtyfivetest.ui.main
 
 import androidx.lifecycle.MutableLiveData
-import ru.improvegroup.sixtyfivetest.domain.interactor.EmployeeInteractor
+import ru.improvegroup.sixtyfivetest.domain.interactor.Interactor
 import ru.improvegroup.sixtyfivetest.ui.common.BaseViewModel
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val interactor: EmployeeInteractor
+    private val interactor: Interactor
 ) : BaseViewModel() {
 
     val loading = MutableLiveData(false)

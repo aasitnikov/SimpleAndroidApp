@@ -7,4 +7,7 @@ data class Employee(
     //TODO: birthday
     val photoUrl: String?,
     val specialty: Specialty
-)
+) {
+
+    fun formatName() = "$lastName $firstName"
+}

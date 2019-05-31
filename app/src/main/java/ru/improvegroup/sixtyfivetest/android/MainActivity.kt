@@ -6,7 +6,7 @@ import ru.improvegroup.sixtyfivetest.domain.entity.Employee
 import ru.improvegroup.sixtyfivetest.ui.employeedetails.EmployeeDetailsFragment
 import ru.improvegroup.sixtyfivetest.ui.employeelist.EmployeeListFragment
 import ru.improvegroup.sixtyfivetest.ui.main.MainFragment
-import ru.improvegroup.sixtyfivetest.ui.specialty.SpecialtyFragment
+import ru.improvegroup.sixtyfivetest.ui.specialty.SpecialtyListFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,14 +35,14 @@ class MainActivity : AppCompatActivity() {
 
     fun navigateToDetails(employee: Employee) {
         supportFragmentManager.beginTransaction()
-            .replace(ru.improvegroup.sixtyfivetest.R.id.container, EmployeeDetailsFragment.newInstance())
+            .replace(ru.improvegroup.sixtyfivetest.R.id.container, EmployeeDetailsFragment.newInstance(employee))
             .addToBackStack(null)
             .commit()
     }
 
     fun navigateToSpecialty() {
         supportFragmentManager.beginTransaction()
-            .replace(ru.improvegroup.sixtyfivetest.R.id.container, SpecialtyFragment.newInstance())
+            .replace(ru.improvegroup.sixtyfivetest.R.id.container, SpecialtyListFragment.newInstance())
             .addToBackStack(null)
             .commit()
     }

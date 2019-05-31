@@ -8,14 +8,19 @@ import ru.improvegroup.sixtyfivetest.domain.gateway.LocalGateway
 import ru.improvegroup.sixtyfivetest.domain.gateway.RemoteGateway
 import javax.inject.Inject
 
-class EmployeeInteractor @Inject constructor(
+class Interactor @Inject constructor(
     private val remote: RemoteGateway,
     private val local: LocalGateway
 ) {
 
     fun fetchFromApi(): Completable {
         return remote.getAllEmployees()
-            .flatMapCompletable { local.saveEmployees(it) }
+            .flatMapCompletable { list ->
+                Completable.mergeArray(
+                    local.saveEmployees(list),
+                    local.saveSpecialities(list.map { it.specialty }.distinctBy { it.id })
+                )
+            }
     }
 
     fun getEmployees(): Single<List<Employee>> = local.getEmployees()

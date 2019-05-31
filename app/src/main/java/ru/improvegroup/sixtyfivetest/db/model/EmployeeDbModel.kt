@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "employee")
 data class EmployeeDbModel(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val uid: Int,
     @ColumnInfo(name = "first_name")
     val firstName: String,

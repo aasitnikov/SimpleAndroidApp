@@ -2,6 +2,7 @@ package ru.improvegroup.sixtyfivetest.db.gateway
 
 import io.reactivex.Completable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import ru.improvegroup.sixtyfivetest.db.model.EmployeeDbModel
 import ru.improvegroup.sixtyfivetest.db.model.SpecialtyDbModel
 import ru.improvegroup.sixtyfivetest.db.room.AppDatabase
@@ -21,7 +22,7 @@ class DbLocalGateway @Inject constructor(
 
 
     override fun getEmployees(): Single<List<Employee>> {
-        return employeeDao.getAll().map { it.map(::mapDbToDomain) }
+        return employeeDao.getAll().subscribeOn(Schedulers.io()).map { it.map(::mapDbToDomain) }
     }
 
     private fun mapDbToDomain(source: EmployeeDbModel): Employee {
@@ -35,7 +36,7 @@ class DbLocalGateway @Inject constructor(
     }
 
     override fun saveEmployees(list: List<Employee>): Completable {
-        return employeeDao.deleteAll().andThen(
+        return employeeDao.deleteAll().subscribeOn(Schedulers.io()).andThen(
             employeeDao.insertAll(list.map(::mapDomainToDb))
         )
     }
@@ -49,7 +50,7 @@ class DbLocalGateway @Inject constructor(
     )
 
     override fun getSpecialties(): Single<List<Specialty>> {
-        return specialtyDao.getAll().map { it.map(::mapDbToDomain) }
+        return specialtyDao.getAll().subscribeOn(Schedulers.io()).map { it.map(::mapDbToDomain) }
     }
 
     private fun mapDbToDomain(source: SpecialtyDbModel) = Specialty(
@@ -58,7 +59,7 @@ class DbLocalGateway @Inject constructor(
     )
 
     override fun saveSpecialities(list: List<Specialty>): Completable {
-        return specialtyDao.deleteAll().andThen(
+        return specialtyDao.deleteAll().subscribeOn(Schedulers.io()).andThen(
             specialtyDao.insertAll(list.map(this::mapDomainToDb))
         )
     }
