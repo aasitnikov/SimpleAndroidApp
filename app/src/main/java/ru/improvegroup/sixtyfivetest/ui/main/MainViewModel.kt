@@ -35,11 +35,6 @@ class MainViewModel @Inject constructor(
 
     fun onRefresh() = loadEmployees()
 
-    fun navigateToList() {
-        if (loading.value != false) return
-        router.navigateTo(Screens.EmployeeList())
-    }
-
     fun navigateToSpecialty() {
         if (loading.value != false) return
         router.navigateTo(Screens.SpecialtyList())

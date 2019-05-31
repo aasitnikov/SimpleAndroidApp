@@ -10,3 +10,9 @@ object ToothpickViewModelFactory : ViewModelProvider.Factory {
         return Toothpick.openScope(Scopes.APP).getInstance(modelClass)
     }
 }
+
+class ToothpickViewModelFactoryScoped(private val scope: Any) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return Toothpick.openScopes(Scopes.APP, scope).getInstance(modelClass)
+    }
+}

@@ -17,8 +17,9 @@ fun <T : Any?> Fragment.observe(liveData: LiveData<T>, observer: (T) -> Unit) {
     })
 }
 
-fun <T : ViewModel> Fragment.injectViewModel(modelClass: KClass<T>): T {
-    return ViewModelProviders.of(this, ToothpickViewModelFactory).get(modelClass.java)
+fun <T : ViewModel> Fragment.injectViewModel(modelClass: KClass<T>, customScope: Any? = null): T {
+    val factory = if (customScope == null) ToothpickViewModelFactory else ToothpickViewModelFactoryScoped(customScope)
+    return ViewModelProviders.of(this, factory).get(modelClass.java)
 }
 
 fun ViewGroup.inflate(@LayoutRes res: Int): View = LayoutInflater.from(context).inflate(res, this, false)

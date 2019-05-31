@@ -23,6 +23,6 @@ class Interactor @Inject constructor(
             }
     }
 
-    fun getEmployees(): Single<List<Employee>> = local.getEmployees()
+    fun getEmployees(specialtyId: Int): Single<List<Employee>> = local.getEmployees(specialtyId)
     fun getSpecialties(): Single<List<Specialty>> = local.getSpecialties()
 }

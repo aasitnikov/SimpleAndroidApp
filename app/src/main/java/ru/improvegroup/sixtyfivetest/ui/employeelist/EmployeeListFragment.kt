@@ -5,18 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_employee_list.*
 import ru.improvegroup.sixtyfivetest.R
+import ru.improvegroup.sixtyfivetest.di.Scopes
 import ru.improvegroup.sixtyfivetest.domain.entity.Employee
 import ru.improvegroup.sixtyfivetest.ui.common.injectViewModel
 import ru.improvegroup.sixtyfivetest.ui.common.observe
+import toothpick.Toothpick
+import toothpick.config.Module
 
 class EmployeeListFragment : Fragment() {
 
-    private val viewModel: IEmployeeListViewModel by lazy {
-        injectViewModel(EmployeeListViewModel::class)
+    private val argSpecialtyId: Int get() = arguments!!.getInt(ARG_SPECIALITY_ID)
+    private val viewModel by lazy {
+        Toothpick.openScopes(Scopes.APP, Scopes.EMPLOYEE_LIST).apply {
+            installModules(Module().apply {
+                bind(Int::class.javaObjectType).toInstance(argSpecialtyId)
+            })
+        }
+        injectViewModel(EmployeeListViewModel::class, Scopes.EMPLOYEE_LIST)
     }
 
     private val adapter = EmployeeListAdapter(::onEmployeeClicked)
@@ -44,6 +54,10 @@ class EmployeeListFragment : Fragment() {
     private fun onEmployeeClicked(employee: Employee) = viewModel.navigateToDetails(employee)
 
     companion object {
-        fun newInstance() = EmployeeListFragment()
+        const val ARG_SPECIALITY_ID = "ARG_SPECIALITY_ID"
+
+        fun newInstance(specialityId: Int) = EmployeeListFragment().apply {
+            arguments = bundleOf(ARG_SPECIALITY_ID to specialityId)
+        }
     }
 }

@@ -9,21 +9,24 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.improvegroup.sixtyfivetest.domain.entity.Specialty
 import ru.improvegroup.sixtyfivetest.ui.common.inflate
 
-class SpecialtyAdapter : ListAdapter<Specialty, SpecialtyAdapter.ViewHolder>(ItemCallback) {
+class SpecialtyAdapter(
+    private val onClick: (Int) -> Unit
+) : ListAdapter<Specialty, SpecialtyAdapter.ViewHolder>(ItemCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(parent.inflate(android.R.layout.simple_list_item_1))
+        return ViewHolder(parent.inflate(android.R.layout.simple_list_item_1), onClick)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(getItem(position))
 
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, private val onClick: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
 
         private val textView: TextView = view.findViewById(android.R.id.text1)
 
         fun bind(specialty: Specialty) {
             textView.text = specialty.name
+            itemView.setOnClickListener { onClick(specialty.id) }
         }
     }
 

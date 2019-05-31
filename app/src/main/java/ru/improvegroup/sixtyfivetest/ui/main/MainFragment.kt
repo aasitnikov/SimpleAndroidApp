@@ -35,7 +35,6 @@ class MainFragment : Fragment() {
     private fun bindViewModel() {
         observe(viewModel.loading) {
             swipeRefreshLayout.isRefreshing = it
-            button_list.isEnabled = !it
             button_specialty.isEnabled = !it
         }
         observe(viewModel.errorVisible) { textView_error.isVisible = it }
@@ -44,7 +43,6 @@ class MainFragment : Fragment() {
 
     private fun setupListeners() {
         swipeRefreshLayout.setOnRefreshListener { viewModel.onRefresh() }
-        button_list.setOnClickListener { viewModel.navigateToList() }
         button_specialty.setOnClickListener { viewModel.navigateToSpecialty() }
     }
 

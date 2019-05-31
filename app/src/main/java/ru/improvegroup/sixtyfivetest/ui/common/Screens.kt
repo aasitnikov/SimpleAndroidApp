@@ -8,8 +8,8 @@ import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 object Screens {
 
-    class EmployeeList : SupportAppScreen() {
-        override fun getFragment() = EmployeeListFragment.newInstance()
+    class EmployeeList(private val specialityId: Int) : SupportAppScreen() {
+        override fun getFragment() = EmployeeListFragment.newInstance(specialityId)
     }
 
     class SpecialtyList : SupportAppScreen() {

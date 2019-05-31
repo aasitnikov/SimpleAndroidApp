@@ -24,11 +24,15 @@ class DbLocalGateway @Inject constructor(
 
     private val dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE
 
-    override fun getEmployees(): Single<List<Employee>> {
+    override fun getEmployees(specialtyId: Int): Single<List<Employee>> {
         return specialtyDao.getAll().subscribeOn(Schedulers.io()).flatMap { specList ->
             val map = specList.associateBy { it.uid }
             employeeDao.getAll()
-                .map { list -> list.map { mapDbToDomain(it, map) } }
+                .map { list ->
+                    list
+                        .filter { it.specialtyId == specialtyId }
+                        .map { mapDbToDomain(it, map) }
+                }
         }
     }
 

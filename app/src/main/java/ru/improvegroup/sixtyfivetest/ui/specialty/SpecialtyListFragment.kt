@@ -16,7 +16,7 @@ class SpecialtyListFragment : Fragment() {
 
     private val viewModel by lazy { injectViewModel(SpecialtyViewModel::class) }
 
-    private val adapter = SpecialtyAdapter()
+    private val adapter = SpecialtyAdapter(::navigateToList)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_specialty, container, false)
@@ -37,6 +37,8 @@ class SpecialtyListFragment : Fragment() {
     private fun bindViewModel() {
         observe(viewModel.specialtyList) { adapter.submitList(it) }
     }
+
+    private fun navigateToList(specialityId: Int) = viewModel.navigateToList(specialityId)
 
     companion object {
         fun newInstance() = SpecialtyListFragment()
