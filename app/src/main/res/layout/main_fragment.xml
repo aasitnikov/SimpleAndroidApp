@@ -32,5 +32,19 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Error Text"
             tools:visibility="visible" />
+
+        <Button
+            android:id="@+id/button_specialty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Go to spec"
+            app:layout_constraintBottom_toTopOf="@id/button_list" />
+
+        <Button
+            android:id="@+id/button_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Go to list"
+            app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

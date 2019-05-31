@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.main_fragment.*
 import ru.improvegroup.sixtyfivetest.R
+import ru.improvegroup.sixtyfivetest.android.MainActivity
 import ru.improvegroup.sixtyfivetest.ui.common.injectViewModel
 import ru.improvegroup.sixtyfivetest.ui.common.observe
 
@@ -21,6 +22,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).supportActionBar?.title = "MainFragment"
         setupListeners()
     }
 
@@ -42,6 +44,8 @@ class MainFragment : Fragment() {
 
     private fun setupListeners() {
         swipeRefreshLayout.setOnRefreshListener { viewModel.onRefresh() }
+        button_list.setOnClickListener { (activity!! as MainActivity).navigateToList() }
+        button_specialty.setOnClickListener { (activity!! as MainActivity).navigateToSpecialty() }
     }
 
     companion object {
