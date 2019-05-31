@@ -28,7 +28,7 @@ class DbLocalGateway @Inject constructor(
         return specialtyDao.getAll().subscribeOn(Schedulers.io()).flatMap { specList ->
             val map = specList.associateBy { it.uid }
             employeeDao.getAll()
-                .map { it.map { mapDbToDomain(it, map) } }
+                .map { list -> list.map { mapDbToDomain(it, map) } }
         }
     }
 

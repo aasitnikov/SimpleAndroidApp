@@ -15,11 +15,15 @@ import ru.improvegroup.sixtyfivetest.db.gateway.DbLocalGateway
 import ru.improvegroup.sixtyfivetest.db.room.AppDatabase
 import ru.improvegroup.sixtyfivetest.domain.gateway.LocalGateway
 import ru.improvegroup.sixtyfivetest.domain.gateway.RemoteGateway
+import ru.terrakok.cicerone.Cicerone
+import ru.terrakok.cicerone.NavigatorHolder
+import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.config.Module
 
 object Di {
     fun init(app: Context) {
+        val cicerone = Cicerone.create()
         Toothpick.openScope(Scopes.APP).installModules(Module().apply {
             bind(RemoteGateway::class.java)
                 .to(ApiRemoteGateway::class.java)
@@ -32,6 +36,9 @@ object Di {
             bind(ApiService::class.java).toInstance(createApiService())
 
             bind(AppDatabase::class.java).toInstance(createDatabase(app))
+
+            bind(Router::class.java).toInstance(cicerone.router)
+            bind(NavigatorHolder::class.java).toInstance(cicerone.navigatorHolder)
         })
     }
 

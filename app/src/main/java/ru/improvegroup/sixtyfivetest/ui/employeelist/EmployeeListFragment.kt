@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_employee_list.*
 import ru.improvegroup.sixtyfivetest.R
-import ru.improvegroup.sixtyfivetest.android.MainActivity
 import ru.improvegroup.sixtyfivetest.domain.entity.Employee
 import ru.improvegroup.sixtyfivetest.ui.common.injectViewModel
 import ru.improvegroup.sixtyfivetest.ui.common.observe
@@ -27,7 +27,7 @@ class EmployeeListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).supportActionBar?.title = getString(R.string.employee_list_toolbar_title)
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.employee_list_toolbar_title)
         setupRecyclerView()
         bindViewModel()
     }
@@ -41,10 +41,7 @@ class EmployeeListFragment : Fragment() {
         observe(viewModel.employeeList) { adapter.submitList(it) }
     }
 
-
-    private fun onEmployeeClicked(employee: Employee) {
-        (activity as MainActivity).navigateToDetails(employee)
-    }
+    private fun onEmployeeClicked(employee: Employee) = viewModel.navigateToDetails(employee)
 
     companion object {
         fun newInstance() = EmployeeListFragment()

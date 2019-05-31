@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.main_fragment.*
 import ru.improvegroup.sixtyfivetest.R
-import ru.improvegroup.sixtyfivetest.android.MainActivity
 import ru.improvegroup.sixtyfivetest.ui.common.injectViewModel
 import ru.improvegroup.sixtyfivetest.ui.common.observe
 
@@ -22,7 +22,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).supportActionBar?.title = "MainFragment"
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.app_name)
         setupListeners()
     }
 
@@ -33,18 +33,19 @@ class MainFragment : Fragment() {
     }
 
     private fun bindViewModel() {
-        observe(viewModel.loading) { swipeRefreshLayout.isRefreshing = it }
-        observe(viewModel.errorVisible) {
-            message.isVisible = !it
-            textView_error.isVisible = it
+        observe(viewModel.loading) {
+            swipeRefreshLayout.isRefreshing = it
+            button_list.isEnabled = !it
+            button_specialty.isEnabled = !it
         }
+        observe(viewModel.errorVisible) { textView_error.isVisible = it }
         observe(viewModel.error) { textView_error.text = it }
     }
 
     private fun setupListeners() {
         swipeRefreshLayout.setOnRefreshListener { viewModel.onRefresh() }
-        button_list.setOnClickListener { (activity!! as MainActivity).navigateToList() }
-        button_specialty.setOnClickListener { (activity!! as MainActivity).navigateToSpecialty() }
+        button_list.setOnClickListener { viewModel.navigateToList() }
+        button_specialty.setOnClickListener { viewModel.navigateToSpecialty() }
     }
 
     companion object {

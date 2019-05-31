@@ -3,10 +3,13 @@ package ru.improvegroup.sixtyfivetest.ui.main
 import androidx.lifecycle.MutableLiveData
 import ru.improvegroup.sixtyfivetest.domain.interactor.Interactor
 import ru.improvegroup.sixtyfivetest.ui.common.BaseViewModel
+import ru.improvegroup.sixtyfivetest.ui.common.Screens
+import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val interactor: Interactor
+    private val interactor: Interactor,
+    private val router: Router
 ) : BaseViewModel() {
 
     val loading = MutableLiveData(false)
@@ -31,4 +34,14 @@ class MainViewModel @Inject constructor(
     }
 
     fun onRefresh() = loadEmployees()
+
+    fun navigateToList() {
+        if (loading.value != false) return
+        router.navigateTo(Screens.EmployeeList())
+    }
+
+    fun navigateToSpecialty() {
+        if (loading.value != false) return
+        router.navigateTo(Screens.SpecialtyList())
+    }
 }

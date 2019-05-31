@@ -2,22 +2,29 @@ package ru.improvegroup.sixtyfivetest.android
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import ru.improvegroup.sixtyfivetest.domain.entity.Employee
-import ru.improvegroup.sixtyfivetest.ui.employeedetails.EmployeeDetailsFragment
-import ru.improvegroup.sixtyfivetest.ui.employeelist.EmployeeListFragment
+import ru.improvegroup.sixtyfivetest.R
+import ru.improvegroup.sixtyfivetest.di.Scopes
 import ru.improvegroup.sixtyfivetest.ui.main.MainFragment
-import ru.improvegroup.sixtyfivetest.ui.specialty.SpecialtyListFragment
+import ru.terrakok.cicerone.NavigatorHolder
+import ru.terrakok.cicerone.android.support.SupportAppNavigator
+import toothpick.Toothpick
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var navigatorHolder: NavigatorHolder
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(ru.improvegroup.sixtyfivetest.R.layout.main_activity)
+        setContentView(R.layout.main_activity)
+
+        Toothpick.inject(this, Toothpick.openScope(Scopes.APP))
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(ru.improvegroup.sixtyfivetest.R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, MainFragment.newInstance())
                 .commitNow()
         }
 
@@ -25,25 +32,14 @@ class MainActivity : AppCompatActivity() {
         shouldDisplayHomeUp()
     }
 
-    fun navigateToList() {
-        supportFragmentManager.beginTransaction()
-            .replace(ru.improvegroup.sixtyfivetest.R.id.container, EmployeeListFragment.newInstance())
-            .addToBackStack(null)
-            .commit()
+    override fun onResumeFragments() {
+        super.onResumeFragments()
+        navigatorHolder.setNavigator(SupportAppNavigator(this, CONTAINER_ID))
     }
 
-    fun navigateToDetails(employee: Employee) {
-        supportFragmentManager.beginTransaction()
-            .replace(ru.improvegroup.sixtyfivetest.R.id.container, EmployeeDetailsFragment.newInstance(employee))
-            .addToBackStack(null)
-            .commit()
-    }
-
-    fun navigateToSpecialty() {
-        supportFragmentManager.beginTransaction()
-            .replace(ru.improvegroup.sixtyfivetest.R.id.container, SpecialtyListFragment.newInstance())
-            .addToBackStack(null)
-            .commit()
+    override fun onPause() {
+        super.onPause()
+        navigatorHolder.removeNavigator()
     }
 
     private fun shouldDisplayHomeUp() {
@@ -55,5 +51,9 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         supportFragmentManager.popBackStack()
         return true
+    }
+
+    companion object {
+        const val CONTAINER_ID = R.id.container
     }
 }

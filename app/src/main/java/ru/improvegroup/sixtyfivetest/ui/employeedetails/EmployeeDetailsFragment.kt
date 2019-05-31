@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
@@ -11,7 +12,6 @@ import kotlinx.android.synthetic.main.fragment_employee_details.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import ru.improvegroup.sixtyfivetest.R
-import ru.improvegroup.sixtyfivetest.android.MainActivity
 import ru.improvegroup.sixtyfivetest.domain.entity.Employee
 
 class EmployeeDetailsFragment : Fragment() {
@@ -30,7 +30,7 @@ class EmployeeDetailsFragment : Fragment() {
     }
 
     private fun fillEmployee() {
-        (activity as MainActivity).supportActionBar?.title = argEmployee.formatName()
+        (activity as AppCompatActivity).supportActionBar?.title = argEmployee.formatName()
 
         textView_birthDay.text = getString(R.string.employee_details_birthday, formatBirthDay(argEmployee.birthDay))
         val age: String = argEmployee.age()?.toString() ?: "-"

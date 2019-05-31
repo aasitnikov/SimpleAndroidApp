@@ -7,4 +7,6 @@
     <string name="employee_details_birthday">День рождения: %s</string>
     <string name="employee_details_age">Возраст: %s</string>
     <string name="employee_details_speciality">Специальность: %s</string>
+    <string name="button_specialty_list">Специализации</string>
+    <string name="button_employee_list">Работники</string>
 </resources>
