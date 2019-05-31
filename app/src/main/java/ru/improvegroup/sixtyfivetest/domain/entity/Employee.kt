@@ -5,6 +5,6 @@ data class Employee(
     val firstName: String,
     val lastName: String,
     //TODO: birthday
-    val photoUrl: String,
+    val photoUrl: String?,
     val specialty: Specialty
 )
