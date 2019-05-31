@@ -37,5 +37,8 @@ dependencies {
 
     implementation "io.reactivex.rxjava2:rxjava:2.2.9"
 
+    implementation "com.github.stephanenicolas.toothpick:toothpick-runtime:2.1.0"
+    kapt "com.github.stephanenicolas.toothpick:toothpick-compiler:2.1.0"
+
     testImplementation "junit:junit:4.12"
 }

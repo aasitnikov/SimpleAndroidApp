@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.main_fragment.*
 import ru.improvegroup.sixtyfivetest.R
+import ru.improvegroup.sixtyfivetest.ui.common.injectViewModel
 import ru.improvegroup.sixtyfivetest.ui.common.observe
 
 class MainFragment : Fragment() {
@@ -26,7 +26,7 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = injectViewModel(MainViewModel::class)
         bindViewModel()
     }
 

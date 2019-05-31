@@ -1,14 +1,14 @@
 package ru.improvegroup.sixtyfivetest.ui.main
 
 import androidx.lifecycle.MutableLiveData
-import ru.improvegroup.sixtyfivetest.api.fake.FakeRemoteGateway
 import ru.improvegroup.sixtyfivetest.domain.entity.Employee
 import ru.improvegroup.sixtyfivetest.domain.interactor.EmployeeInteractor
 import ru.improvegroup.sixtyfivetest.ui.common.BaseViewModel
+import javax.inject.Inject
 
-class MainViewModel : BaseViewModel() {
-
-    private val interactor = EmployeeInteractor(FakeRemoteGateway)
+class MainViewModel @Inject constructor(
+    private val interactor: EmployeeInteractor
+) : BaseViewModel() {
 
     val employeeList = MutableLiveData<List<Employee>>()
     val loading = MutableLiveData(false)
