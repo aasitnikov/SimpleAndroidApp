@@ -1,6 +1,7 @@
 package ru.improvegroup.sixtyfivetest.api.fake
 
 import io.reactivex.Single
+import org.threeten.bp.LocalDate
 import ru.improvegroup.sixtyfivetest.domain.entity.Employee
 import ru.improvegroup.sixtyfivetest.domain.entity.Specialty
 import ru.improvegroup.sixtyfivetest.domain.gateway.RemoteGateway
@@ -21,6 +22,7 @@ object FakeRemoteGateway : RemoteGateway {
                                 "Name",
                                 "Surname",
                                 "http://img2.russia.ru/upimg/author/422/image.jpg",
+                                LocalDate.of(2010, 1, 2),
                                 Specialty(
                                     1,
                                     "Manager"

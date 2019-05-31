@@ -8,7 +8,7 @@ data class EmployeeApiModel(
     @SerializedName("l_name")
     val lastName: String,
     @SerializedName("birthday")
-    val birthday: String,
+    val birthday: String?,
     @SerializedName("avatr_url")
     val avatarUrl: String?,
     @SerializedName("specialty")

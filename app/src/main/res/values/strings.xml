@@ -3,4 +3,8 @@
 
     <string name="employee_list_toolbar_title">Список работников</string>
     <string name="specialty_list_toolbar_title">Список специальностей</string>
+
+    <string name="employee_details_birthday">День рождения: %s</string>
+    <string name="employee_details_age">Возраст: %s</string>
+    <string name="employee_details_speciality">Специальность: %s</string>
 </resources>

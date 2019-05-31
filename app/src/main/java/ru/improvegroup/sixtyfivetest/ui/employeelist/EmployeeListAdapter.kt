@@ -29,8 +29,7 @@ class EmployeeListAdapter(
         fun bind(employee: Employee) {
             itemView.setOnClickListener { onClick(employee) }
             text1.text = employee.formatName()
-            //TODO: birthday
-            text2.text = "26"
+            text2.text = employee.age()?.toString() ?: "-"
         }
     }
 

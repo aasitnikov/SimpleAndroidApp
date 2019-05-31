@@ -13,5 +13,7 @@ data class EmployeeDbModel(
     @ColumnInfo(name = "last_name")
     val lastName: String,
     @ColumnInfo(name = "avatar")
-    val avatar: String?
+    val avatar: String?,
+    @ColumnInfo(name = "birth_day")
+    val birthDay: String?
 )

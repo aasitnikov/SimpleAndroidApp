@@ -3,6 +3,8 @@ package ru.improvegroup.sixtyfivetest.db.gateway
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 import ru.improvegroup.sixtyfivetest.db.model.EmployeeDbModel
 import ru.improvegroup.sixtyfivetest.db.model.SpecialtyDbModel
 import ru.improvegroup.sixtyfivetest.db.room.AppDatabase
@@ -20,6 +22,7 @@ class DbLocalGateway @Inject constructor(
     private val employeeDao: EmployeeDao = database.employeeDao()
     private val specialtyDao: SpecialtyDao = database.specialtyDao()
 
+    private val dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE
 
     override fun getEmployees(): Single<List<Employee>> {
         return employeeDao.getAll().subscribeOn(Schedulers.io()).map { it.map(::mapDbToDomain) }
@@ -31,6 +34,7 @@ class DbLocalGateway @Inject constructor(
             source.firstName,
             source.lastName,
             source.avatar,
+            source.birthDay?.let { LocalDate.from(dateFormatter.parse(it)) },
             Specialty(0, "") //TODO
         )
     }
@@ -45,7 +49,8 @@ class DbLocalGateway @Inject constructor(
         source.id,
         source.firstName,
         source.lastName,
-        source.photoUrl
+        source.photoUrl,
+        source.birthDay?.let { dateFormatter.format(it) }
         //Specialty(0, "") //TODO
     )
 

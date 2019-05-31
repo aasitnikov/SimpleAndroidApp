@@ -8,6 +8,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_employee_details.*
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 import ru.improvegroup.sixtyfivetest.R
 import ru.improvegroup.sixtyfivetest.android.MainActivity
 import ru.improvegroup.sixtyfivetest.domain.entity.Employee
@@ -29,13 +31,21 @@ class EmployeeDetailsFragment : Fragment() {
 
     private fun fillEmployee() {
         (activity as MainActivity).supportActionBar?.title = argEmployee.formatName()
-//        textView_birthDay.text = TODO: birthday
-//        textView_age.text = TODO: birthday
-        textView_specialty.text = argEmployee.specialty.name
+
+        textView_birthDay.text = getString(R.string.employee_details_birthday, formatBirthDay(argEmployee.birthDay))
+        val age: String = argEmployee.age()?.toString() ?: "-"
+        textView_age.text = getString(R.string.employee_details_age, age)
+        textView_specialty.text = getString(R.string.employee_details_speciality, argEmployee.specialty.name)
+    }
+
+    private fun formatBirthDay(birthDay: LocalDate?): String {
+        return birthDay?.let { uiDateFormatter.format(it) } ?: "-"
     }
 
     companion object {
         private const val ARG_EMPLOYEE = "ARG_EMPLOYEE"
+
+        private val uiDateFormatter = DateTimeFormatter.ofPattern("dd.MM.uuuu")
 
         fun newInstance(employee: Employee) = EmployeeDetailsFragment().apply {
             arguments = bundleOf(ARG_EMPLOYEE to Gson().toJson(employee))
