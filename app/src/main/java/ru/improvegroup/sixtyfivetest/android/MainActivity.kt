@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         shouldDisplayHomeUp()
     }
 
-    //TODO: fix navigation
     fun navigateToList() {
         supportFragmentManager.beginTransaction()
             .replace(ru.improvegroup.sixtyfivetest.R.id.container, EmployeeListFragment.newInstance())

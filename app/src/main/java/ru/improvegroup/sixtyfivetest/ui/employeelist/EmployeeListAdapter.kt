@@ -14,7 +14,6 @@ class EmployeeListAdapter(
 ) : ListAdapter<Employee, EmployeeListAdapter.ViewHolder>(ItemCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        //TODO: maybe custom item layout
         return ViewHolder(parent.inflate(android.R.layout.simple_list_item_2), onClick)
     }
 

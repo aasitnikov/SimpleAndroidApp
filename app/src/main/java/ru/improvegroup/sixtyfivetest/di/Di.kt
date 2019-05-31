@@ -47,9 +47,7 @@ object Di {
 
     private fun createOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            //TODO: replace with timber
-            //TODO: remove wtf
-            .addInterceptor(HttpLoggingInterceptor { Log.wtf("65apps", it) })
+            .addInterceptor(HttpLoggingInterceptor { Log.d("65apps", it) })
             .build()
     }
 

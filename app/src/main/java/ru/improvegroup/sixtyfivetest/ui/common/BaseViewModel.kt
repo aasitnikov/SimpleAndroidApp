@@ -1,5 +1,6 @@
 package ru.improvegroup.sixtyfivetest.ui.common
 
+import android.util.Log
 import androidx.annotation.CallSuper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,11 +12,10 @@ import io.reactivex.disposables.Disposable
 abstract class BaseViewModel : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
-    //TODO: replace with singleLiveEvent
     val error = MutableLiveData<String>()
 
     protected fun handleError(ex: Throwable) {
-        //TODO: log
+        Log.e("BaseViewModel", ex.message, ex)
         error.postValue(ex.message)
     }
 
