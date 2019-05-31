@@ -2,6 +2,7 @@ package ru.improvegroup.sixtyfivetest.android
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import ru.improvegroup.sixtyfivetest.domain.entity.Employee
 import ru.improvegroup.sixtyfivetest.ui.employeedetails.EmployeeDetailsFragment
 import ru.improvegroup.sixtyfivetest.ui.employeelist.EmployeeListFragment
 import ru.improvegroup.sixtyfivetest.ui.main.MainFragment
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    fun navigateToDetails() {
+    fun navigateToDetails(employee: Employee) {
         supportFragmentManager.beginTransaction()
             .replace(ru.improvegroup.sixtyfivetest.R.id.container, EmployeeDetailsFragment.newInstance())
             .addToBackStack(null)

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Improve Test</string>
+
+    <string name="employee_list_toolbar_title">Список работников</string>
 </resources>

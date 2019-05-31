@@ -1,5 +1,9 @@
 package ru.improvegroup.sixtyfivetest.ui.common
 
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -16,3 +20,5 @@ fun <T : Any?> Fragment.observe(liveData: LiveData<T>, observer: (T) -> Unit) {
 fun <T : ViewModel> Fragment.injectViewModel(modelClass: KClass<T>): T {
     return ViewModelProviders.of(this, ToothpickViewModelFactory).get(modelClass.java)
 }
+
+fun ViewGroup.inflate(@LayoutRes res: Int): View = LayoutInflater.from(context).inflate(res, this, false)

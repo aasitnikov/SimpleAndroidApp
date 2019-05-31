@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_employee_list.*
 import ru.improvegroup.sixtyfivetest.R
 import ru.improvegroup.sixtyfivetest.android.MainActivity
+import ru.improvegroup.sixtyfivetest.domain.entity.Employee
 import ru.improvegroup.sixtyfivetest.ui.common.injectViewModel
 import ru.improvegroup.sixtyfivetest.ui.common.observe
 
@@ -17,23 +19,31 @@ class EmployeeListFragment : Fragment() {
         injectViewModel(EmployeeListViewModel::class)
     }
 
+    private val adapter = EmployeeListAdapter(::onEmployeeClicked)
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_employee_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).supportActionBar?.title = "EmployeeListFragment"
-        setupListeners()
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.employee_list_toolbar_title)
+        setupRecyclerView()
         bindViewModel()
     }
 
-    private fun setupListeners() {
-        button_details.setOnClickListener { (activity as MainActivity).navigateToDetails() }
+    private fun setupRecyclerView() {
+        recyclerView_employee.adapter = adapter
+        recyclerView_employee.layoutManager = LinearLayoutManager(context!!)
     }
 
     private fun bindViewModel() {
-        observe(viewModel.employeeList) { textView_content.text = it.toString() }
+        observe(viewModel.employeeList) { adapter.submitList(it) }
+    }
+
+
+    private fun onEmployeeClicked(employee: Employee) {
+        (activity as MainActivity).navigateToDetails(employee)
     }
 
     companion object {
