@@ -33,7 +33,6 @@ class MainFragment : Fragment() {
     }
 
     private fun bindViewModel() {
-        observe(viewModel.employeeList) { message.text = it.toString() }
         observe(viewModel.loading) { swipeRefreshLayout.isRefreshing = it }
         observe(viewModel.errorVisible) {
             message.isVisible = !it

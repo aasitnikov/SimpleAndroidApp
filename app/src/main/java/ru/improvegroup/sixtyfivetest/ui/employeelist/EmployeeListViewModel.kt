@@ -7,14 +7,13 @@ import ru.improvegroup.sixtyfivetest.ui.common.BaseViewModel
 import javax.inject.Inject
 
 class EmployeeListViewModel @Inject constructor(
-    //TODO: must be local
-    private val remote: RemoteGateway
+    private val local: RemoteGateway
 ) : BaseViewModel(), IEmployeeListViewModel {
 
     override val employeeList = MutableLiveData<List<Employee>>()
 
     init {
-        remote.getAllEmployees()
+        local.getAllEmployees()
             .subscribe(employeeList::postValue, this::handleError)
             .untilDestroy()
     }

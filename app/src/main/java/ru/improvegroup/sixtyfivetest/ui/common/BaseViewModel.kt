@@ -3,6 +3,7 @@ package ru.improvegroup.sixtyfivetest.ui.common
 import androidx.annotation.CallSuper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -23,6 +24,11 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     protected fun <T : Any> Single<T>.bindProgress(liveData: MutableLiveData<Boolean>): Single<T> {
+        return doOnSubscribe { liveData.postValue(true) }
+            .doAfterTerminate { liveData.postValue(false) }
+    }
+
+    protected fun Completable.bindProgress(liveData: MutableLiveData<Boolean>): Completable {
         return doOnSubscribe { liveData.postValue(true) }
             .doAfterTerminate { liveData.postValue(false) }
     }
