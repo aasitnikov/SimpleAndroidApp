@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "specialty")
 data class SpecialtyDbModel(
     @PrimaryKey
+    @ColumnInfo(name = "uid")
     val uid: Int,
     @ColumnInfo(name = "name")
     val name: String
